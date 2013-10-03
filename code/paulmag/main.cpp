@@ -72,7 +72,12 @@ int main() {
         a_ll = A(l,l);
 
         tau = (a_ll - a_kk) / (2 * a_kl);
-        t = - tau + sqrt(1 + tau*tau);
+        if (tau > 0) {
+            t = - tau + sqrt(1 + tau*tau);
+        }
+        else {
+            t = - tau - sqrt(1 + tau*tau);
+        }
 
         c = 1 / sqrt(1 + t*t); // cos(theta)
         s = t * c;             // sin(theta)

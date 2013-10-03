@@ -20,15 +20,22 @@ using namespace arma;
 
 int main() {
 
-    int n = 5;
+    int n     = 5;
+    //int nStep = n + 1;
+
+    double rhoMin = 0;
+    double rhoMax = 10;
+    double h = (rhoMax - rhoMin) / (n + 1);
+    double e = - 1 / (h*h); // non-diagonal matrix element
+
+    // Create matrix A:
     mat A = zeros<mat>(n, n);
     for (int i=0; i<n-1; i++) {
-        // example values:
-        A(i,i) = 5;
-        A(i+1,i) = 4;
-        A(i,i+1) = 3;
+        A(i,i) = 2 / (h*h) + pow(rhoMin + (i+1)*h, 2);
+        A(i+1,i) = e;
+        A(i,i+1) = e;
     }
-    A(4,4) = 5;
+    A(n-1,n-1) = 2 / (h*h) + pow(rhoMin + n*h, 2);
 
     cout << A << endl;
 
@@ -43,7 +50,7 @@ int main() {
     double maxA = 10 * eps;
     int iterations = 0;
 
-    while (maxA > eps) {
+    while (abs(maxA) > eps) {
 
         maxA = 0;
         for (int i=0; i<n-1; i++) {
@@ -70,13 +77,15 @@ int main() {
         c = 1 / sqrt(1 + t*t); // cos(theta)
         s = t * c;             // sin(theta)
 
-        for (int i=0; i<n and i!=k and i!=l; i++) {
-            b_ik = A(i,k) * c - A(i,l) * s;
-            b_il = A(i,l) * c - A(i,k) * s;
-            A(i,k) = b_ik;
-            A(k,i) = b_ik;
-            A(i,l) = b_il;
-            A(l,i) = b_il;
+        for (int i=0; i<n; i++) {
+            if (i!=k and i!=l) {
+                b_ik = A(i,k) * c - A(i,l) * s;
+                b_il = A(i,l) * c - A(i,k) * s;
+                A(i,k) = b_ik;
+                A(k,i) = b_ik;
+                A(i,l) = b_il;
+                A(l,i) = b_il;
+            }
         }
         A(k,k) = a_kk * c*c - 2*a_kl * c * s + a_ll * s*s;
         A(l,l) = a_ll * c*c - 2*a_kl * c * s + a_kk * s*s;
@@ -84,6 +93,7 @@ int main() {
         A(l,k) = 0;
 
         iterations++;
+        cout << maxA << endl;
     }
 
     cout << A << endl;

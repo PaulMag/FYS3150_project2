@@ -1,7 +1,12 @@
+# Makefiles
+make*
+Make*
+
 # Compiled Object files
 *.slo
 *.lo
 *.o
+*.out
 
 # Compiled Dynamic libraries
 *.so

@@ -20,11 +20,11 @@ using namespace arma;
 
 int main() {
 
-    int n     = 10;
+    int n = 100;
     //int nStep = n + 1;
 
     double rhoMin = 0;
-    double rhoMax = 10;
+    double rhoMax = 4.5; // 4.5 is ideal according to vedadh
     double rho, V;
     double h = (rhoMax - rhoMin) / (n + 1);
     double e = - 1 / (h*h); // non-diagonal matrix element
@@ -38,12 +38,14 @@ int main() {
         A(i+1,i) = e;
         A(i,i+1) = e;
     }
-    A(n-1,n-1) = 2 / (h*h) + pow(rhoMin + n*h, 2);
+    rho = rhoMin + n * h;
+    V = rho*rho;
+    A(n-1,n-1) = 2 / (h*h) + V;
+    //A(n-1,n-1) = 2 / (h*h) + pow(rhoMin + n*h, 2);
 
-    cout << A << endl;
+    //cout << A << endl;
 
-    int k = 0;
-    int l = 0;
+    int k, l;
 
     double a_ll, a_lk, a_kl, a_kk;
     double tau, t, s, c;
@@ -74,19 +76,19 @@ int main() {
 
         tau = (a_ll - a_kk) / (2 * a_kl);
         if (tau > 0) {
-            t = 1./(tau + sqrt(1 + tau*tau));
+            t = 1. / (tau + sqrt(1 + tau*tau));
         }
         else {
-            t =  1./(tau - sqrt(1 + tau*tau));
+            t = 1. / (tau - sqrt(1 + tau*tau));
         }
 
-        c = 1 / sqrt(1 + t*t); // cos(theta)
+        c = 1.0 / sqrt(1 + t*t); // cos(theta)
         s = t * c;             // sin(theta)
 
         for (int i=0; i<n; i++) {
             if (i!=k and i!=l) {
                 b_ik = A(i,k) * c - A(i,l) * s;
-                b_il = A(i,l) * c - A(i,k) * s;
+                b_il = A(i,l) * c + A(i,k) * s;
                 A(i,k) = b_ik;
                 A(k,i) = b_ik;
                 A(i,l) = b_il;
@@ -95,14 +97,20 @@ int main() {
         }
 
         A(k,k) = a_kk * c*c - 2*a_kl * c * s + a_ll * s*s;
-        A(l,l) = a_ll * c*c - 2*a_kl * c * s + a_kk * s*s;
-        A(k,l) = 0;
-        A(l,k) = 0;
+        A(l,l) = a_ll * c*c + 2*a_kl * c * s + a_kk * s*s;
+        A(k,l) = 0.0;
+        A(l,k) = 0.0;
+        //cout << (a_kk - a_ll) * c*s + a_kl * (c*c - s*s) << endl;
 
+        //cout << A << endl;
         iterations++;
-        cout << maxA << endl;
+        //cout << maxA << endl;
+        //break;
     }
 
-    cout << A << endl;
     cout << "Iterations: " << iterations << endl;
+    cout << "Eigenvalues: " << endl;
+    vec eigenVals = sort(A.diag());
+    cout << eigenVals << endl;
+
 }

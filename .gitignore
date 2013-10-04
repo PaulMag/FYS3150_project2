@@ -16,3 +16,9 @@ Make*
 *.lai
 *.la
 *.a
+
+*.cpp.swp
+*.py.swp
+*.h.swp
+*.h
+main

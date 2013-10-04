@@ -20,27 +20,32 @@ using namespace arma;
 
 int main() {
 
-    int n     = 5;
+    int n = 100;
     //int nStep = n + 1;
 
     double rhoMin = 0;
-    double rhoMax = 10;
+    double rhoMax = 4.5; // 4.5 is ideal according to vedadh
+    double rho, V;
     double h = (rhoMax - rhoMin) / (n + 1);
     double e = - 1 / (h*h); // non-diagonal matrix element
 
     // Create matrix A:
     mat A = zeros<mat>(n, n);
     for (int i=0; i<n-1; i++) {
-        A(i,i) = 2 / (h*h) + pow(rhoMin + (i+1)*h, 2);
+        rho = rhoMin + (i+1) * h;
+        V = rho*rho;
+        A(i,i) = 2 / (h*h) + V;
         A(i+1,i) = e;
         A(i,i+1) = e;
     }
-    A(n-1,n-1) = 2 / (h*h) + pow(rhoMin + n*h, 2);
+    rho = rhoMin + n * h;
+    V = rho*rho;
+    A(n-1,n-1) = 2 / (h*h) + V;
+    //A(n-1,n-1) = 2 / (h*h) + pow(rhoMin + n*h, 2);
 
-    cout << A << endl;
+    //cout << A << endl;
 
-    int k = 0;
-    int l = 0;
+    int k, l;
 
     double a_ll, a_lk, a_kl, a_kk;
     double tau, t, s, c;
@@ -50,19 +55,17 @@ int main() {
     double maxA = 10 * eps;
     int iterations = 0;
 
-    while (abs(maxA) > eps) {
+    while (maxA > eps) {
 
         maxA = 0;
-        for (int i=0; i<n-1; i++) {
-            if ( maxA < abs(A(i+1,i)) ) {
-                maxA = A(i+1,i);
-                k = i+1;
-                l = i;
-            }
-            if ( maxA < abs(A(i,i+1)) ) {
-                maxA = A(i,i+1);
-                k = i;
-                l = i+1;
+        for (int i=0; i<n; i++) {
+            for (int j=i+1; j<n; j++) {
+                if (abs(A(i,j)) > maxA ) {
+                    // Find max value except on diagonal.
+                    maxA = abs(A(i,j));
+                    k = i;
+                    l = j;
+                }
             }
         }
 
@@ -72,30 +75,42 @@ int main() {
         a_ll = A(l,l);
 
         tau = (a_ll - a_kk) / (2 * a_kl);
-        t = - tau + sqrt(1 + tau*tau);
+        if (tau > 0) {
+            t = 1. / (tau + sqrt(1 + tau*tau));
+        }
+        else {
+            t = 1. / (tau - sqrt(1 + tau*tau));
+        }
 
-        c = 1 / sqrt(1 + t*t); // cos(theta)
+        c = 1.0 / sqrt(1 + t*t); // cos(theta)
         s = t * c;             // sin(theta)
 
         for (int i=0; i<n; i++) {
             if (i!=k and i!=l) {
                 b_ik = A(i,k) * c - A(i,l) * s;
-                b_il = A(i,l) * c - A(i,k) * s;
+                b_il = A(i,l) * c + A(i,k) * s;
                 A(i,k) = b_ik;
                 A(k,i) = b_ik;
                 A(i,l) = b_il;
                 A(l,i) = b_il;
             }
         }
-        A(k,k) = a_kk * c*c - 2*a_kl * c * s + a_ll * s*s;
-        A(l,l) = a_ll * c*c - 2*a_kl * c * s + a_kk * s*s;
-        A(k,l) = 0;
-        A(l,k) = 0;
 
+        A(k,k) = a_kk * c*c - 2*a_kl * c * s + a_ll * s*s;
+        A(l,l) = a_ll * c*c + 2*a_kl * c * s + a_kk * s*s;
+        A(k,l) = 0.0;
+        A(l,k) = 0.0;
+        //cout << (a_kk - a_ll) * c*s + a_kl * (c*c - s*s) << endl;
+
+        //cout << A << endl;
         iterations++;
-        cout << maxA << endl;
+        //cout << maxA << endl;
+        //break;
     }
 
-    cout << A << endl;
     cout << "Iterations: " << iterations << endl;
+    cout << "Eigenvalues: " << endl;
+    vec eigenVals = sort(A.diag());
+    cout << eigenVals << endl;
+
 }

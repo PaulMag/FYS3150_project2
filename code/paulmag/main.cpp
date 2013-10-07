@@ -20,7 +20,7 @@ using namespace arma;
 
 int main() {
 
-    int n = 100;
+    int n = 168;
     //int nStep = n + 1;
 
     double rhoMin = 0;
@@ -111,6 +111,12 @@ int main() {
     cout << "Iterations: " << iterations << endl;
     cout << "Eigenvalues: " << endl;
     vec eigenVals = sort(A.diag());
-    cout << eigenVals << endl;
+    cout << eigenVals(0) << endl <<
+            eigenVals(1) << endl <<
+            eigenVals(2) << endl;
+
+    /* When nStep \approx 168 then 3 lowest eigenvalues are correct
+     * with 4 leading digits, rhoMax = 4.5.
+     */
 
 }

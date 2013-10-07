@@ -1,0 +1,3 @@
+[submodule "code/vedad"]
+	path = code/vedad
+	url = git@github.com:vedad/Project-2.git

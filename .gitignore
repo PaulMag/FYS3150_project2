@@ -23,3 +23,10 @@ Make*
 *.h
 main
 *.md.swp
+
+# Tex
+*.pdf
+*.log
+*.out
+*.fdb_latexmk
+*.aux

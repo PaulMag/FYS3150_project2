@@ -1,0 +1,15 @@
+Schrödinger's equation is used to describe the nature of particles
+on the quantum scale. In this project we will look at Schrödinger's
+equation for both one and two electrons in a three-dimensional
+harmonic oscillator potential with and without the coulomb
+interaction.
+
+We will rewrite Schrödinger's equation in terms of dimensionless
+variables and rearrange it into an eigenvalue problem. The
+eigenvalues of a real symmetric matrix can be found by reducing the
+non-diagonal matrix elements via continuously applying
+similarity-transformation until they are all below a certain
+predetermined tolerance $\epsilon$.
+
+Furthermore, we will perform an analysis on the exactness of this
+method with respect to computational cost.

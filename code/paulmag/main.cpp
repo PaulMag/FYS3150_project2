@@ -23,7 +23,7 @@ using namespace arma;
 
 int main() {
 
-    int n = 30; // nStep = n+1
+    int n = 200; // nStep = n+1
 
     double rhoMin = 0;
     double rhoMax = 4.5; // 4.5 is ideal according to vedadh
@@ -59,8 +59,12 @@ int main() {
          << eigenVals(1) << endl
          << eigenVals(2) << endl;
 
-    cout << "\nAn eigenvector:" << endl;
-    cout << S.col(2) << endl;
+    ofstream outfile;
+    outfile.open ("data/prob_no_coulomb_0.dat");
+    for (int i=0; i<n; i++) {
+        outfile << pow(S.col(0)(i), 2) << endl;
+    }
+    outfile.close();
 
     /*
      * When nStep \approx 168 then 3 lowest eigenvalues are correct

@@ -23,7 +23,7 @@ using namespace arma;
 
 int main() {
 
-    int n = 200; // nStep = n+1
+    int n = 100; // nStep = n+1
 
     double rhoMin = 0;
     double rhoMax = 4.5; // 4.5 is ideal according to vedadh
@@ -31,7 +31,7 @@ int main() {
     double h = (rhoMax - rhoMin) / (n + 1);
     double e = - 1 / (h*h); // non-diagonal matrix element
 
-    double omega_r = 0.0; // 0.01, 0.5, 1, 5
+    double omega_r = 0.01; // 0.01, 0.5, 1, 5
 
     // Create matrix A:
     mat A = zeros<mat>(n, n);
@@ -51,24 +51,46 @@ int main() {
     }
 
     JacobiRotation(A, n, S);
-    //vec eigenVals = sort(eig_sym(A)); // Armadillos method
+    //vec eigenVals = eig_sym(A); // Armadillos built-in method
+
+    vec eigenVals       = A.diag();
+    vec eigenValsSorted = sort(eigenVals);
+    int* eigenValsIndices = new int[n];
+
+    for (int i=0; i<n; i++) {
+        for (int j=0; j<n; j++) {
+            if (eigenValsSorted(i) == eigenVals(j)) {
+                eigenValsIndices[i] = j;
+                break;
+            }
+        }
+    }
 
     cout << "Eigenvalues: " << endl;
-    vec eigenVals = sort(A.diag());
-    cout << eigenVals(0) << endl
-         << eigenVals(1) << endl
-         << eigenVals(2) << endl;
+    cout << eigenValsSorted(0) << endl
+         << eigenVals(eigenValsIndices[0]) << endl;
 
-    ofstream outfile;
-    outfile.open ("data/prob_no_coulomb_0.dat");
+    ofstream outfile0;
+    ofstream outfile1;
+    ofstream outfile2;
+    outfile0.open("data/prob_no_coulomb_0.dat");
+    outfile1.open("data/prob_no_coulomb_1.dat");
+    outfile2.open("data/prob_no_coulomb_2.dat");
+
     for (int i=0; i<n; i++) {
-        outfile << pow(S.col(0)(i), 2) << endl;
+        outfile0 << pow(S.col(eigenValsIndices[0])(i), 2) << endl;
+        outfile1 << pow(S.col(eigenValsIndices[1])(i), 2) << endl;
+        outfile2 << pow(S.col(eigenValsIndices[2])(i), 2) << endl;
     }
-    outfile.close();
+
+    outfile0.close();
+    outfile1.close();
+    outfile2.close();
 
     /*
      * When nStep \approx 168 then 3 lowest eigenvalues are correct
      * with 4 leading digits, rhoMax = 4.5.
      */
 
+    delete [] eigenValsIndices;
 }

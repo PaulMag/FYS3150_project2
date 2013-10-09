@@ -108,6 +108,8 @@ int main() {
         //break;
     }
 
+    //vec eigenVals = sort(eig_sym(A)); // Armadillos method
+
     cout << "Iterations: " << iterations << endl;
     cout << "Eigenvalues: " << endl;
     vec eigenVals = sort(A.diag());

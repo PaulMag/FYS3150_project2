@@ -1,0 +1,23 @@
+Our interest is to find the solution of the radial part of the
+Schrödinger equation, as seen in equation \ref{eq:schrod}.  This
+can be done first for one electron and then extended to describe
+two electrons including their Coulomb interaction.
+
+\begin{equation}
+    -\frac{\hbar^2}{2m}\left(
+    \frac{1}{r^2}\frac{d}{dr}r^2\frac{d}{dr} -
+    \frac{l(l+1)}{r^2} \right)R(r) + V(r)R(r) = ER(r)
+    \label{eq:schrod}
+\end{equation}
+
+Via introducing dimensionless variables for the radius $\rho$ this
+equation can be rewritten into equation
+\ref{eq:dimensionless_schrod}. Which in turn converts the problem
+of solving the radial Schrödinger equation into an eigenvalue
+problem where $\lambda$ are the eigenvalues we are interested in.
+
+\begin{equation}
+    -\frac{d^2}{d\rho^2}u(\rho) + \rho^2u(\rho) = \lambda
+    u(\rho)
+    \label{eq:dimensionless_schrod}
+\end{equation}

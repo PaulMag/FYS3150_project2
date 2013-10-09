@@ -31,6 +31,8 @@ int main() {
     double h = (rhoMax - rhoMin) / (n + 1);
     double e = - 1 / (h*h); // non-diagonal matrix element
 
+    double omega_r = 0.00; // 0.01, 0.5, 1, 5
+
     // Create matrix A:
     mat A = zeros<mat>(n, n);
 
@@ -41,7 +43,9 @@ int main() {
 
     for (int i=0; i<n; i++) {
         rho = rhoMin + (i+1) * h;
-        V = rho*rho;
+        // Choose wich potential to use:
+        //V = rho*rho;
+        V = omega_r*omega_r * rho*rho + 1./rho;
         A(i,i) = 2 / (h*h) + V;
     }
 
@@ -51,9 +55,9 @@ int main() {
 
     cout << "Eigenvalues: " << endl;
     vec eigenVals = sort(A.diag());
-    cout << eigenVals(0) << endl <<
-            eigenVals(1) << endl <<
-            eigenVals(2) << endl;
+    cout << eigenVals(0) << endl
+         << eigenVals(1) << endl
+         << eigenVals(2) << endl;
 
     /*
      * When nStep \approx 168 then 3 lowest eigenvalues are correct

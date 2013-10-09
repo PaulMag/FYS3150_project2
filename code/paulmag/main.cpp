@@ -33,16 +33,17 @@ int main() {
 
     // Create matrix A:
     mat A = zeros<mat>(n, n);
+
     for (int i=0; i<n-1; i++) {
-        rho = rhoMin + (i+1) * h;
-        V = rho*rho;
-        A(i,i) = 2 / (h*h) + V;
         A(i+1,i) = e;
         A(i,i+1) = e;
     }
-    rho = rhoMin + n * h;
-    V = rho*rho;
-    A(n-1,n-1) = 2 / (h*h) + V;
+
+    for (int i=0; i<n; i++) {
+        rho = rhoMin + (i+1) * h;
+        V = rho*rho;
+        A(i,i) = 2 / (h*h) + V;
+    }
 
     A = JacobiRotation(A, n);
 

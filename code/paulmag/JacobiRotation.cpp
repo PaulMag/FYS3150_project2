@@ -6,18 +6,24 @@
 using namespace std;
 using namespace arma;
 
-mat JacobiRotation(mat A, int n) {
+void JacobiRotation(mat& A, int n, mat& R) {
 
     int k, l;
 
-    double a_ll, a_lk, a_kl, a_kk;
-    double tau, t, s, c;
+    double a_ik, a_il;
+    double a_ll, a_kl, a_kk; //, a_lk
     double b_ik, b_il;
+    double tau, t, s, c;
+    double r_ik, r_il;
 
     double eps = 1e-8;
     double maxA = 10 * eps;
     int iterations = 0;
 
+    // Matrix for eigenvectors, begins as the unit matrix:
+    R = eye<mat>(n, n);
+
+    // The algorithm:
     while (maxA > eps) {
 
         maxA = 0;
@@ -34,7 +40,7 @@ mat JacobiRotation(mat A, int n) {
 
         a_kk = A(k,k);
         a_kl = A(k,l);
-        a_lk = A(l,k);
+        //a_lk = A(l,k);
         a_ll = A(l,l);
 
         tau = (a_ll - a_kk) / (2 * a_kl);
@@ -50,13 +56,19 @@ mat JacobiRotation(mat A, int n) {
 
         for (int i=0; i<n; i++) {
             if (i!=k and i!=l) {
-                b_ik = A(i,k) * c - A(i,l) * s;
-                b_il = A(i,l) * c + A(i,k) * s;
+                a_ik = A(i,k);
+                a_il = A(i,l);
+                b_ik = a_ik * c - a_il * s;
+                b_il = a_il * c + a_ik * s;
                 A(i,k) = b_ik;
                 A(k,i) = b_ik;
                 A(i,l) = b_il;
                 A(l,i) = b_il;
             }
+            r_ik = R(i,k);
+            r_il = R(i,l);
+            R(i,k) = c * r_ik - s * r_il;
+            R(i,l) = c * r_il + s * r_ik;
         }
 
         A(k,k) = a_kk * c*c - 2*a_kl * c * s + a_ll * s*s;
@@ -68,5 +80,4 @@ mat JacobiRotation(mat A, int n) {
     }
 
     cout << "Iterations: " << iterations << endl;
-    return A;
 }

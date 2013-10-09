@@ -23,7 +23,7 @@ using namespace arma;
 
 int main() {
 
-    int n = 100; // nStep = n+1
+    int n = 30; // nStep = n+1
 
     double rhoMin = 0;
     double rhoMax = 4.5; // 4.5 is ideal according to vedadh
@@ -31,10 +31,11 @@ int main() {
     double h = (rhoMax - rhoMin) / (n + 1);
     double e = - 1 / (h*h); // non-diagonal matrix element
 
-    double omega_r = 0.00; // 0.01, 0.5, 1, 5
+    double omega_r = 0.0; // 0.01, 0.5, 1, 5
 
     // Create matrix A:
     mat A = zeros<mat>(n, n);
+    mat S(n,n); // for keeping eigenvectors
 
     for (int i=0; i<n-1; i++) {
         A(i+1,i) = e;
@@ -44,13 +45,12 @@ int main() {
     for (int i=0; i<n; i++) {
         rho = rhoMin + (i+1) * h;
         // Choose wich potential to use:
-        //V = rho*rho;
-        V = omega_r*omega_r * rho*rho + 1./rho;
+        V = rho*rho;
+        //V = omega_r*omega_r * rho*rho + 1./rho;
         A(i,i) = 2 / (h*h) + V;
     }
 
-    A = JacobiRotation(A, n);
-
+    JacobiRotation(A, n, S);
     //vec eigenVals = sort(eig_sym(A)); // Armadillos method
 
     cout << "Eigenvalues: " << endl;
@@ -58,6 +58,9 @@ int main() {
     cout << eigenVals(0) << endl
          << eigenVals(1) << endl
          << eigenVals(2) << endl;
+
+    cout << "\nAn eigenvector:" << endl;
+    cout << S.col(2) << endl;
 
     /*
      * When nStep \approx 168 then 3 lowest eigenvalues are correct

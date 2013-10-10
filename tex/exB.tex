@@ -1,7 +1,25 @@
-Now that our eigenvalue solver is implemented and working, we can look at how
-the results vary for the different parameters $n_{step}$ and  $\rho_{max}$.
+The results from running the Jacobi rotation algorithm will vary with how 
+$n_{step}$ and $\rho_{max}$ are chosen. First of all, it would be useful to find
+out how large the matrix needs to be for the algorithm to produce the first few
+eigenvalues with four leading digits. At that point, the precision is high
+enough for our purposes. Second, we'd like to see how the precision in the
+eigenvalues depend on the choice of $\rho_{max}$. 
 
-First, we decide on a fixed value for $n_{step}$, say $ n_{step} = 100$. By
-running the algorithm for various $\rho_{max}$, we can find out approximately
-for what $\rho_{max}$ we get the best results. 
+By doing more of a guess than calculation, we set $\rho_{max} = 5$. The
+algorithm is then used to find the eigenvalues of matrices with increasing
+dimensions. The values for $n_{step}$ are narrowed down between 150 and 300 to
+see the relative difference more clearly. Figure \refig{nreldiff} shows the result.
+%
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=1.0\textwidth]{images/nreldiff2.eps}
+\caption{The figure shows how much the numerical eigenvalues differ from the analytical
+	ones as $n_{step}$ increases.}
+\label{fig:nreldiff}
+\end{figure}
+%
+
+
+
+
 

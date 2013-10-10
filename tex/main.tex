@@ -2,10 +2,38 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage{graphicx, color}
+\usepackage{parskip} % norwegian sections (skip line)
+\usepackage{amsmath}
+\usepackage[small,bf]{caption}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+
+% Packages for including code
+\usepackage{listings}
+\lstset{language=idl} % or python, java, etc\ldots
+\lstset{basicstyle=\ttfamily\scriptsize} % \small if short code
+\lstset{frame=single} % creates the frame around code
+\lstset{title=\lstname} % display name of file, not necessary
+\lstset{keywordstyle=\color{red}\bfseries}
+\lstset{commentstyle=\color{blue}}
+\lstset{stringstyle =\color{darkgreen}}
+\lstset{showspaces=false}
+\lstset{showstringspaces=false}
+\lstset{showtabs=false}
+\lstset{breaklines=true}
+\lstset{tabsize=4}
+
+% Commands for referencing
+\newcommand{\refeq}[1]{(\textcolor{red}{\ref{eq:#1}})} % Red color when referencing equations.
+\newcommand{\refig}[1]{\textcolor{blue}{\ref{fig:#1}}} % Blue color when referencing figures.
+\newcommand{\reflst}[1]{(\textcolor{red}{\ref{lst:#1}})}
 
 \begin{document}
 
 \section{Introduction}
 \input{introduction.txt}
+
+\input{exB}
 
 \end{document}

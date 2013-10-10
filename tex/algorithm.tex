@@ -48,7 +48,20 @@ $t$ can be found by \[t = -\tau \pm \sqrt{1 + \tau^2} =
 \frac{1}{\tau \pm \sqrt{1 + \tau^2}}.\] The smallest of the two
 roots should be chosen from this expression.
 
-<+Explenation of how theta is kept below threshold and why.+>
+<+Explanation of how theta is kept below threshold and why.+>
 
 Furthermore, the values \[c = \cos{(\theta)} = \frac{1}{\sqrt{1 +
-t^2}}\] and $s = \sin{(\theta)} = tc$ can be calculated.
+t^2}}\] and $s = \sin{(\theta)} = tc$ can be calculated. 
+
+The coordinates $k$ and $l$ are decided by finding the maximum of
+all the nondiagonal elements of the matrix. This means setting the
+maximum elements ($b_{kl}$ and is symmetric counterpart $b_{lk}$)
+equal to zero which optimally reduces the sum of the nondiagonal
+elements.
+
+Repeated transformations are carried out until the absolute value
+of the largest nondiagonal matrix element is below a certain
+threshold. This makes sure that all other nondiagonal elements also
+are below this tolerance. \[\text{max}(|a_{ij}|) < \epsilon \text{,
+for all } i \neq j\] The tolerance would typically be of the
+magnitude \[\epsilon = 1 \cdot 10^{-8}\] or less.

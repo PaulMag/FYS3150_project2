@@ -10,6 +10,9 @@
 \usepackage{algpseudocode}
 \usepackage{parskip}
 
+% Only for one purpose: Placeholder text
+\usepackage{lipsum}
+
 % Packages for including code
 \usepackage{listings}
 \lstset{language=idl} % or python, java, etc\ldots
@@ -52,10 +55,17 @@ Sørensen-Clark}
 \section{Algorithm}
 \input{algorithm.tex}
 
+\section{Results}
+\input{resultsEigenvalues.tex}
+
 \section{Plot the wave function for two electrons in oscillator}
 \input{d.tex}
 
 \input{exB.tex}
+
+\section{Discussion}
+% Remove line below to get rid of placeholder text
+\lipsum[1]
 
 \section{Code}
 \input{code.tex}

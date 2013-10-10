@@ -1,37 +1,44 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-"""
-infile0 = open("data/prob_no_coulomb_0.dat", "r")
-infile1 = open("data/prob_no_coulomb_1.dat", "r")
-infile2 = open("data/prob_no_coulomb_2.dat", "r")
-"""
-infile0 = open("data/prob_coulomb2_0.dat", "r")
-infile1 = open("data/prob_coulomb2_1.dat", "r")
-infile2 = open("data/prob_coulomb2_2.dat", "r")
+infile = open("data/prob_no_coulomb.dat", "r") # No coulomb interaction.
+#infile = open("data/prob_coulomb0.dat", "r") # Coulomb interaction with five
+#infile = open("data/prob_coulomb1.dat", "r") # different oscillator strengths.
+#infile = open("data/prob_coulomb2.dat", "r")
+#infile = open("data/prob_coulomb3.dat", "r")
+#infile = open("data/prob_coulomb4.dat", "r")
+
+info = infile.readline().split(",")
+n, rhoMax, omega_r = int(info[0]), float(info[1]), float(info[2])
+rho = np.linspace(0, rhoMax, n);
+
+wave = [ [], [], [] ]
+
+for  line in infile:
+    line = line.split(",")
+    for k in range(3):
+        wave[k].append(float( line[k] ))
 
 
-wave0 = []
-wave1 = []
-wave2 = []
+wave = np.array(wave)
 
-n = 0
+for k in range(3):
+    wave[k, 1:] /= rho[1:]
+    wave[k, 0]  /= rho[1] * 0.5 # avoid zero division
 
-for line0,line1,line2 in zip(infile0, infile1, infile2):
-    wave0.append(float(line0))
-    wave1.append(float(line1))
-    wave2.append(float(line2))
-    n += 1
+for k in range(3):
+    for i in range(n):
+        wave[k,i] = wave[k,i]**2 # find probability
+    wave[k] = n * wave[k] / np.sum(wave[k]) # normalize
 
-r = np.linspace(0, 1, n);
+plt.plot(rho,wave[0], rho,wave[1], rho,wave[2])
 
-# Normalize probabilities:
-wave0, wave1, wave2 = np.array(wave0), np.array(wave1), np.array(wave2)
-wave0 = n * wave0 / np.sum(wave0)
-wave1 = n * wave1 / np.sum(wave1)
-wave2 = n * wave2 / np.sum(wave2)
-
-plt.plot(r,wave0, r,wave1, r,wave2)
-plt.xlabel("r")
+plt.xlabel("rho")
 plt.ylabel("probability")
+
+plt.title("Two electrons in oscillator, no coulomb force")
+#plt.title("Two electrons in oscillator, coulomb force, omega_r=%g" % omega_r)
+
+#plt.legend("lambda_0", "lambda_1", "lambda_2") # didn't work
+
 plt.show()

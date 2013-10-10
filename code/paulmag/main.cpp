@@ -9,13 +9,11 @@
 using namespace std;
 using namespace arma;
 
-/*
- *  I am beautiful.
- *  Vedad is not beautiful, because he laughed at me.
+/* I am beautiful.
+ * Vedad is not beautiful, because he laughed at me.
  */
 
-/*
- * Stuff to remember:
+/* Stuff to remember:
  *
  * mat A = zeros<mat>(n, n);
  * vec a(n);
@@ -23,10 +21,10 @@ using namespace arma;
 
 int main() {
 
-    int n = 100; // nStep = n+1
+    int n = 150; // nStep = n+1
 
     double rhoMin = 0;
-    double rhoMax = 4.5; // 4.5 is ideal according to vedadh
+    double rhoMax = 5.; // 4.5 is ideal according to vedadh
     double rho, V;
     double h = (rhoMax - rhoMin) / (n + 1);
     double e = - 1 / (h*h); // non-diagonal matrix element
@@ -47,7 +45,7 @@ int main() {
         // Choose wich potential to use:
         V = rho*rho;
         //V = omega_r*omega_r * rho*rho + 1./rho;
-        A(i,i) = 2 / (h*h) + V;
+        A(i,i) = 2. / (h*h) + V;
     }
 
     JacobiRotation(A, n, S);
@@ -66,31 +64,35 @@ int main() {
         }
     }
 
-    cout << "Eigenvalues: " << endl;
-    cout << eigenValsSorted(0) << endl
-         << eigenVals(eigenValsIndices[0]) << endl;
+    cout << "Eigenvalues: " << endl
+         << eigenValsSorted(0) << endl
+         << eigenValsSorted(1) << endl
+         << eigenValsSorted(2) << endl;
 
-    ofstream outfile0;
-    ofstream outfile1;
-    ofstream outfile2;
-    outfile0.open("data/prob_no_coulomb_0.dat");
-    outfile1.open("data/prob_no_coulomb_1.dat");
-    outfile2.open("data/prob_no_coulomb_2.dat");
+    ofstream outfile;
+
+    // Choose wich file to write to:
+    outfile.open("data/prob_no_coulomb.dat");
+    //outfile.open("data/prob_coulomb0.dat");
+    //outfile.open("data/prob_coulomb1.dat");
+    //outfile.open("data/prob_coulomb2.dat");
+    //outfile.open("data/prob_coulomb3.dat");
+    //outfile.open("data/prob_coulomb4.dat");
+
+    outfile << n << "," << rhoMax << "," << omega_r << endl;
 
     for (int i=0; i<n; i++) {
-        outfile0 << pow(S.col(eigenValsIndices[0])(i), 2) << endl;
-        outfile1 << pow(S.col(eigenValsIndices[1])(i), 2) << endl;
-        outfile2 << pow(S.col(eigenValsIndices[2])(i), 2) << endl;
+        // Write the eigenvectors (not normalized):
+        outfile << S.col(eigenValsIndices[0])(i) << ","
+                << S.col(eigenValsIndices[1])(i) << ","
+                << S.col(eigenValsIndices[2])(i) << endl;
     }
 
-    outfile0.close();
-    outfile1.close();
-    outfile2.close();
+    outfile.close();
+    delete [] eigenValsIndices;
 
-    /*
+    /* Results:
      * When nStep \approx 168 then 3 lowest eigenvalues are correct
      * with 4 leading digits, rhoMax = 4.5.
      */
-
-    delete [] eigenValsIndices;
 }

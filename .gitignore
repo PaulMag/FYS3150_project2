@@ -31,3 +31,6 @@ main
 *.out
 *.fdb_latexmk
 *.aux
+
+# Swapfiles
+*.swp

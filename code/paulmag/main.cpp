@@ -9,13 +9,11 @@
 using namespace std;
 using namespace arma;
 
-/*
- *  I am beautiful.
- *  Vedad is not beautiful, because he laughed at me.
+/* I am beautiful.
+ * Vedad is not beautiful, because he laughed at me.
  */
 
-/*
- * Stuff to remember:
+/* Stuff to remember:
  *
  * mat A = zeros<mat>(n, n);
  * vec a(n);
@@ -23,15 +21,15 @@ using namespace arma;
 
 int main() {
 
-    int n = 30; // nStep = n+1
+    int n = 150; // nStep = n+1
 
     double rhoMin = 0;
-    double rhoMax = 4.5; // 4.5 is ideal according to vedadh
+    double rhoMax = 5.; // 4.5 is ideal according to vedadh
     double rho, V;
     double h = (rhoMax - rhoMin) / (n + 1);
     double e = - 1 / (h*h); // non-diagonal matrix element
 
-    double omega_r = 0.0; // 0.01, 0.5, 1, 5
+    double omega_r = 0.01; // 0.01, 0.5, 1, 5
 
     // Create matrix A:
     mat A = zeros<mat>(n, n);
@@ -47,24 +45,54 @@ int main() {
         // Choose wich potential to use:
         V = rho*rho;
         //V = omega_r*omega_r * rho*rho + 1./rho;
-        A(i,i) = 2 / (h*h) + V;
+        A(i,i) = 2. / (h*h) + V;
     }
 
     JacobiRotation(A, n, S);
-    //vec eigenVals = sort(eig_sym(A)); // Armadillos method
+    //vec eigenVals = eig_sym(A); // Armadillos built-in method
 
-    cout << "Eigenvalues: " << endl;
-    vec eigenVals = sort(A.diag());
-    cout << eigenVals(0) << endl
-         << eigenVals(1) << endl
-         << eigenVals(2) << endl;
+    vec eigenVals       = A.diag();
+    vec eigenValsSorted = sort(eigenVals);
+    int* eigenValsIndices = new int[n];
 
-    cout << "\nAn eigenvector:" << endl;
-    cout << S.col(2) << endl;
+    for (int i=0; i<n; i++) {
+        for (int j=0; j<n; j++) {
+            if (eigenValsSorted(i) == eigenVals(j)) {
+                eigenValsIndices[i] = j;
+                break;
+            }
+        }
+    }
 
-    /*
+    cout << "Eigenvalues: " << endl
+         << eigenValsSorted(0) << endl
+         << eigenValsSorted(1) << endl
+         << eigenValsSorted(2) << endl;
+
+    ofstream outfile;
+
+    // Choose wich file to write to:
+    outfile.open("data/prob_no_coulomb.dat");
+    //outfile.open("data/prob_coulomb0.dat");
+    //outfile.open("data/prob_coulomb1.dat");
+    //outfile.open("data/prob_coulomb2.dat");
+    //outfile.open("data/prob_coulomb3.dat");
+    //outfile.open("data/prob_coulomb4.dat");
+
+    outfile << n << "," << rhoMax << "," << omega_r << endl;
+
+    for (int i=0; i<n; i++) {
+        // Write the eigenvectors (not normalized):
+        outfile << S.col(eigenValsIndices[0])(i) << ","
+                << S.col(eigenValsIndices[1])(i) << ","
+                << S.col(eigenValsIndices[2])(i) << endl;
+    }
+
+    outfile.close();
+    delete [] eigenValsIndices;
+
+    /* Results:
      * When nStep \approx 168 then 3 lowest eigenvalues are correct
      * with 4 leading digits, rhoMax = 4.5.
      */
-
 }

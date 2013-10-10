@@ -2,8 +2,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-\usepackage{graphicx, color}
-\usepackage{parskip} % norwegian sections (skip line)
+\usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage[small,bf]{caption}
 \usepackage{hyperref}
@@ -29,10 +28,30 @@
 \newcommand{\refig}[1]{\textcolor{blue}{\ref{fig:#1}}} % Blue color when referencing figures.
 \newcommand{\reflst}[1]{(\textcolor{red}{\ref{lst:#1}})}
 
+% Fancy ruler needed for titlepage
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\author{Kristoffer Brækken, Vedad Hodzic, Paul Magnus
+Sørensen-Clark}
+
 \begin{document}
 
+\begin{titlepage}
+    \thispagestyle{empty}
+    \input{frontPage.tex}
+\end{titlepage}
+
 \section{Introduction}
-\input{introduction.txt}
+\input{introduction.tex}
+
+\section{Theory}
+\input{theory.tex}
+
+\section{Algorithm}
+\input{algorithm.tex}
+
+\section{Plot the wave function for two electrons in oscillator}
+\input{d.tex}
 
 \input{exB}
 

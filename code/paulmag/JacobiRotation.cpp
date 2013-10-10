@@ -40,7 +40,6 @@ void JacobiRotation(mat& A, int n, mat& R) {
 
         a_kk = A(k,k);
         a_kl = A(k,l);
-        //a_lk = A(l,k);
         a_ll = A(l,l);
 
         tau = (a_ll - a_kk) / (2 * a_kl);

@@ -1,0 +1,22 @@
+% paulms:
+
+% Task d: Plot the wave function for two electrons as functions of the relative
+% coordinate r.
+
+I want to plot the wave functions, or more specifically, the probability
+functions for two electrons inside the harmonic oscillator.
+To do this I need to find the eigenvectors that correspond to each eigenvalue
+of the system. I will only find the wave functions for the ground state and the two lowest
+excited states: $\lambda_0$, $\lambda_1$ and $\lambda_2$
+
+The Jacobi Algorithm we used correspond to doing
+$$
+\mathbf{B} = \mathbf{S}^T_N \cdots \mathbf{S}^T_2 \mathbf{S}^T_1 \mathbf{S}^T_0
+             \mathbf{A}
+             \mathbf{S}_0 \mathbf{S}_1 \mathbf{S}_2 \cdots \mathbf{S}_N
+           = \mathbf{S}^T A \mathbf{S}
+$$
+where $N$ is the number of iterations that was required to make all the
+non-diagonal elements of $\mathbf{B}$ be $\approx 0$ and $\mathbf{S}$ is the
+eigenvectors, or eigenfunctions, that correspond to the eigenvectors in
+$\mathbf{B}$.

@@ -24,12 +24,12 @@ wave = np.array(wave)
 
 for k in range(3):
     wave[k, 1:] /= rho[1:]
-    wave[k, 0]  /= rho[1] * 0.5 # avoid zero division
+    wave[k, 0]  /= rho[1] * 0.5 # avoid zero division (not neccesarily accurate)
 
 for k in range(3):
     for i in range(n):
         wave[k,i] = wave[k,i]**2 # find probability
-    wave[k] = n * wave[k] / np.sum(wave[k]) # normalize
+    wave[k] = n * wave[k] / np.sum(wave[k]) / rhoMax # normalize
 
 plt.plot(rho,wave[0], rho,wave[1], rho,wave[2])
 
@@ -39,6 +39,6 @@ plt.ylabel("probability")
 plt.title("Two electrons in oscillator, no coulomb force")
 #plt.title("Two electrons in oscillator, coulomb force, omega_r=%g" % omega_r)
 
-#plt.legend("lambda_0", "lambda_1", "lambda_2") # didn't work
+plt.legend(("$\lambda_0$", "$\lambda_1$", "$\lambda_2$"), loc="best")
 
 plt.show()

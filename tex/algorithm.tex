@@ -13,8 +13,8 @@ $A$ is then calculated by multiplying with $S$ and its transpose,
 \begin{align*}
     B = S^T A S.
 \end{align*}
-The elements of the matrix $B$ will be changed according to the
-following algorithm.
+The elements of the matrix $B$ will after the multiplication be
+decided by the following algorithm.
 \begin{algorithmic}
     \For{i=1,2,3,\dots,n}
         \State$b_{ii} = a_{ii}$
@@ -36,11 +36,19 @@ following algorithm.
         a_{kl}(\cos^2{(\theta)} - \sin^2{(\theta)})$
     \EndFor
 \end{algorithmic}
-To emply this algorithm to work in our favour --- to actually
-gradually reduce nondiagonal elements. The choice of $\theta$ must
-be a specific number. The number can be found by requiring that
-\[b_{kl} = b_{lk} = 0.\] This gives us the equation
-\[b_{kl} = (a_{kk} - a_{ll})\cos{(\theta)}\sin{(\theta)} +
-a_{kl}(\cos^2{(\theta)} - \sin^2{(\theta)}) = 0,\] which when
-introducing the variable \[\tau =
-\frac{a_{ll}-a_{kk}}{2a_{kl}},\] can be rewritten as <++>.
+To employ this to work in our favour --- to actually gradually
+reduce nondiagonal elements, the choice of $\theta$ must be a
+specific number. The number can be found by requiring that \[b_{kl}
+= b_{lk} = 0.\] This gives us the equation \[b_{kl} = (a_{kk} -
+a_{ll})\cos{(\theta)}\sin{(\theta)} + a_{kl}(\cos^2{(\theta)} -
+\sin^2{(\theta)}) = 0,\] which when introducing the variable \[\tau
+= \frac{a_{ll}-a_{kk}}{2a_{kl}},\] can be rewritten as \[t^2 +
+2\tau t - 1 = 0.\] where $t = \tan{(\theta)}$. This means that
+$t$ can be found by \[t = -\tau \pm \sqrt{1 + \tau^2} =
+\frac{1}{\tau \pm \sqrt{1 + \tau^2}}.\] The smallest of the two
+roots should be chosen from this expression.
+
+<+Explenation of how theta is kept below threshold and why.+>
+
+Furthermore, the values \[c = \cos{(\theta)} = \frac{1}{\sqrt{1 +
+t^2}}\] and $s = \sin{(\theta)} = tc$ can be calculated.

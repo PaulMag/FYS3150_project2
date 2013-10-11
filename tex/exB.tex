@@ -113,7 +113,10 @@ calculated.
 
 Although it is much more efficient to use the Armadillo function, implementing the Jacobi
 rotation algorithm gives us valuable insight in how some eigenvalue solvers work. It is
-slow, especially for large matrices, but very easy to implement.
+slow, especially for large matrices, but very easy to implement. For every transformation,
+the previous elements which were set to zero, may have become different from zero. This
+means that it needs to transform these elements again. That is one of the reasons for why 
+the method is slow.
 
 How does the relative
 difference behave for various $n_{\mathrm{step}}$, compared to figure \refig{nreldiff}? 

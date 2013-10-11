@@ -1,11 +1,11 @@
 The results from running the Jacobi rotation algorithm will vary with how 
-$n_{\mathrm{step}}$ and $\rho_{max}$ are chosen. First of all, it would be useful to find
+$n_{\mathrm{step}}$ and $\rho_{\mathrm{max}}$ are chosen. First of all, it would be useful to find
 out how large the matrix needs to be for the algorithm to produce the first few
 eigenvalues with four leading digits. At that point, the precision is high
 enough for our purposes. Second, we'd like to see how the precision in the
-eigenvalues depend on the choice of $\rho_{max}$. 
+eigenvalues depend on the choice of $\rho_{\mathrm{max}}$. 
 
-By doing more of a guess than calculation, we set $\rho_{max} = 5$. The
+By doing more of a guess than calculation, we set $\rho_{\mathrm{max}} = 5$. The
 algorithm is then used to find the eigenvalues of matrices with increasing
 dimensions. The range for $n_{\mathrm{step}}$ is narrowed down to $n_{\mathrm{step}} \in 
 [150,300]$ to see the relative difference more clearly. Figure \refig{nreldiff} shows 
@@ -15,7 +15,7 @@ the result.
 \centering
 \includegraphics[width=1.0\textwidth]{images/nreldiff2.eps}
 \caption{The figure shows how much the numerical eigenvalues differ from the analytical
-	ones as $n_{\mathrm{step}}$ increases. Here we have $\rho_{max} = 5$.}
+	ones as $n_{\mathrm{step}}$ increases. Here we have $\rho_{\mathrm{max}} = 5$.}
 \label{fig:nreldiff}
 \end{figure}
 %
@@ -26,24 +26,24 @@ $\lambda_2 = 11$, has four correct leading digits for all $n_{\mathrm{step}}$ th
 \refig{nreldiff}. This means that when $n_{\mathrm{step}} = 210$, all three eigenvalues show 
 four correct leading digits. 
 
-The precision of the eigenvalues will also depend on $\rho_{max}$. By doing the same
-procedure as above, but keeping $n_{\mathrm{step}}$ constant and vary $\rho_{max}$ instead, we
+The precision of the eigenvalues will also depend on $\rho_{\mathrm{max}}$. By doing the same
+procedure as above, but keeping $n_{\mathrm{step}}$ constant and vary $\rho_{\mathrm{max}}$ instead, we
 get the result shown in figure \refig{rhoreldiff}.
 %
 \begin{figure}[htpb]
 	\centering
 	\includegraphics[width=1.0\textwidth]{images/reldiff2.eps}
 	\caption{The figure shows how the numerical eigenvalues differ from the analytical
-		ones as $\rho_{max}$ increases. Here we have $n_{\mathrm{step}} = 210$.}
+		ones as $\rho_{\mathrm{max}}$ increases. Here we have $n_{\mathrm{step}} = 210$.}
 	\label{fig:rhoreldiff}
 \end{figure}
 %
-Again, the range of $\rho_{max}$ is narrowed down to $\rho_{max} \in [4,10]$ in order to
-highlight the interesting part. For $\rho_{max} = 4$ both $\lambda_1$ and $\lambda_2$ are
-below our precision limit. Already at the next step, $\rho_{max} = 4.5$, they both
-reach four leading digit precision. This holds true for $\rho_{max} = 5$ as well, although
+Again, the range of $\rho_{\mathrm{max}}$ is narrowed down to $\rho_{\mathrm{max}} \in [4,10]$ in order to
+highlight the interesting part. For $\rho_{\mathrm{max}} = 4$ both $\lambda_1$ and $\lambda_2$ are
+below our precision limit. Already at the next step, $\rho_{\mathrm{max}} = 4.5$, they both
+reach four leading digit precision. This holds true for $\rho_{\mathrm{max}} = 5$ as well, although
 the graph grows. For higher values, the precision just lowers.
-So far, we can conclude that $\rho_{max} = 4.5$ gives the greatest accuracy.
+So far, we can conclude that $\rho_{\mathrm{max}} = 4.5$ gives the greatest accuracy.
 
 It can be useful to know how many transformations are needed before all non-diagonal
 elements have become zero. Of course, this means that we need to define what we mean by
@@ -55,7 +55,7 @@ value of $\epsilon$ is then essentially zero.
 Obviously, the number of transformations must be a function of $n_{\mathrm{step}}$. Larger
 $n_{\mathrm{step}}$ means larger matrix, and more elements need to be transformed.
 To estimate how many transformations are needed, we run the algorithm for several
-$n_{\mathrm{step}}$ with $\rho_{max} = 4.5$. This gave us some number of transformations,
+$n_{\mathrm{step}}$ with $\rho_{\mathrm{max}} = 4.5$. This gave us some number of transformations,
 with the corresponding dimensionality of the matrix. These points were then imported into 
 MATLAB, so we could approximate a polynomial with the given data. The number of transformations as function of $n_{\mathrm{step}}$ was approximated to a second-order polynomial
 %
@@ -125,7 +125,7 @@ difference behave for various $n_{\mathrm{step}}$, compared to figure \refig{nre
 	\centering
 	\includegraphics[width=1.0\textwidth]{images/armareldiff2.eps}
 	\caption{The figure shows how the numerical eigenvalues differ from the analytical,
-		using the Armadillo eigenvalue solver. Here $\rho_{max} = 5$.}
+		using the Armadillo eigenvalue solver. Here $\rho_{\mathrm{max}} = 5$.}
 	\label{fig:armareldiff}
 \end{figure}
 %

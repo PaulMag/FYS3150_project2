@@ -9,6 +9,7 @@
 \usepackage{fancyhdr}
 \usepackage{algpseudocode}
 \usepackage{parskip}
+\usepackage{caption}
 
 % Only for one purpose: Placeholder text
 \usepackage{lipsum}
@@ -32,6 +33,7 @@
 \newcommand{\refeq}[1]{(\textcolor{red}{\ref{eq:#1}})} % Red color when referencing equations.
 \newcommand{\refig}[1]{\textcolor{blue}{\ref{fig:#1}}} % Blue color when referencing figures.
 \newcommand{\reflst}[1]{(\textcolor{red}{\ref{lst:#1}})}
+\newcommand{\reftab}[1]{\textcolor{blue}{\ref{tab:#1}}} % Blue color when referencing tables.
 
 % Fancy ruler needed for titlepage
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
@@ -72,7 +74,10 @@ Sørensen-Clark}
 \input{algorithm.tex}
 
 \section{Results}
+\input{exB.tex}
+
 \input{resultsEigenvalues.tex}
+
 
 \section{Plot the wave function for two electrons in oscillator}
 \input{d.tex}

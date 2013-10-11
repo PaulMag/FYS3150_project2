@@ -21,15 +21,16 @@ using namespace arma;
 
 int main() {
 
-    int n = 150; // nStep = n+1
+    int n = 168; // nStep = n+1
 
     double rhoMin = 0;
-    double rhoMax = 5.; // 4.5 is ideal according to vedadh
+    double rhoMax = 1000.0;
     double rho, V;
     double h = (rhoMax - rhoMin) / (n + 1);
     double e = - 1 / (h*h); // non-diagonal matrix element
 
-    double omega_r = 0.01; // 0.01, 0.5, 1, 5
+    // CHOOSE wich potential strength to use:
+    double omega_r = 0.0; // 0, 0.01, 0.5, 1, 5
 
     // Create matrix A:
     mat A = zeros<mat>(n, n);
@@ -42,9 +43,9 @@ int main() {
 
     for (int i=0; i<n; i++) {
         rho = rhoMin + (i+1) * h;
-        // Choose wich potential to use:
-        V = rho*rho;
-        //V = omega_r*omega_r * rho*rho + 1./rho;
+        // CHOOSE wich potential to use:
+        //V = rho*rho;
+        V = omega_r*omega_r * rho*rho + 1./rho;
         A(i,i) = 2. / (h*h) + V;
     }
 
@@ -71,13 +72,13 @@ int main() {
 
     ofstream outfile;
 
-    // Choose wich file to write to:
-    outfile.open("data/prob_no_coulomb.dat");
-    //outfile.open("data/prob_coulomb0.dat");
-    //outfile.open("data/prob_coulomb1.dat");
-    //outfile.open("data/prob_coulomb2.dat");
-    //outfile.open("data/prob_coulomb3.dat");
-    //outfile.open("data/prob_coulomb4.dat");
+    // CHOOSE wich file to write to:
+    //outfile.open("data/eigvec_nocol.dat");
+    outfile.open("data/eigvec_0.dat");
+    //outfile.open("data/eigvec_1.dat");
+    //outfile.open("data/eigvec_2.dat");
+    //outfile.open("data/eigvec_3.dat");
+    //outfile.open("data/eigvec_4.dat");
 
     outfile << n << "," << rhoMax << "," << omega_r << endl;
 

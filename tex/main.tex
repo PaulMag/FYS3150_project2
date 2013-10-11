@@ -36,6 +36,22 @@
 % Fancy ruler needed for titlepage
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
+\newcommand{\bilde}[3]{
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=\textwidth]{#1}
+		\caption{#3 \label{#2}}
+	\end{figure}
+}
+\newcommand{\bildeto}[4]{
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=0.96\textwidth]{#1}
+		\includegraphics[width=0.96\textwidth]{#2}
+		\caption{#4 \label{#3}}
+	\end{figure}
+}
+
 \author{Kristoffer Brækken, Vedad Hodzic, Paul Magnus
 Sørensen-Clark}
 
@@ -61,6 +77,7 @@ Sørensen-Clark}
 \section{Plot the wave function for two electrons in oscillator}
 \input{d.tex}
 
+\section{B}
 \input{exB.tex}
 
 \section{Discussion}

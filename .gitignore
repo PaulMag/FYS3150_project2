@@ -23,6 +23,7 @@ Make*
 *.h
 main
 *.md.swp
+*.swp
 
 # Tex
 *.pdf

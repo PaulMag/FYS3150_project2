@@ -2,11 +2,36 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
-\usepackage{graphicx}
+\usepackage{graphicx,color}
 \usepackage{amsmath}
 \usepackage[small,bf]{caption}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
+\usepackage{algpseudocode}
+\usepackage{parskip}
+
+% Only for one purpose: Placeholder text
+\usepackage{lipsum}
+
+% Packages for including code
+\usepackage{listings}
+\lstset{language=idl} % or python, java, etc\ldots
+\lstset{basicstyle=\ttfamily\scriptsize} % \small if short code
+\lstset{frame=single} % creates the frame around code
+\lstset{title=\lstname} % display name of file, not necessary
+\lstset{keywordstyle=\color{red}\bfseries}
+\lstset{commentstyle=\color{blue}}
+\lstset{stringstyle =\color{darkgreen}}
+\lstset{showspaces=false}
+\lstset{showstringspaces=false}
+\lstset{showtabs=false}
+\lstset{breaklines=true}
+\lstset{tabsize=4}
+
+% Commands for referencing
+\newcommand{\refeq}[1]{(\textcolor{red}{\ref{eq:#1}})} % Red color when referencing equations.
+\newcommand{\refig}[1]{\textcolor{blue}{\ref{fig:#1}}} % Blue color when referencing figures.
+\newcommand{\reflst}[1]{(\textcolor{red}{\ref{lst:#1}})}
 
 % Fancy ruler needed for titlepage
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
@@ -24,10 +49,25 @@ Sørensen-Clark}
 \section{Introduction}
 \input{introduction.tex}
 
+\section{Theory}
+\input{theory.tex}
+
 \section{Algorithm}
 \input{algorithm.tex}
 
+\section{Results}
+\input{resultsEigenvalues.tex}
+
 \section{Plot the wave function for two electrons in oscillator}
 \input{d.tex}
+
+\input{exB.tex}
+
+\section{Discussion}
+% Remove line below to get rid of placeholder text
+\lipsum[1]
+
+\section{Code}
+\input{code.tex}
 
 \end{document}

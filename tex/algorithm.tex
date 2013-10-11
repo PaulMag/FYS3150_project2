@@ -1,23 +1,67 @@
-Our interest is to find the solution of the radial part of the
-Schrödinger equation, as seen in equation \ref{eq:schrod}.  This
-can be done first for one electron and then extended to describe
-two electrons including their Coulomb interaction.
+A real symmetrix matrix can through repeated similarity
+transformations be written as a strictly diagonal matrix.
+Similarity transformations are accomplished by using a sparse
+transformation matrix $S$, where the non-zero elements are
+\begin{align*}
+    s_{kk} &= s_{ll} = \cos{(\theta)}, \\
+    s_{kl} &= -s_{lk} = -\sin{(\theta)}, \\
+    s_{ii} &= 1 \text{, where } i = 1,2,3,\dots,n,
+\end{align*}
+which in $n$-dimensional Euclidean space, performs a plane rotation
+around an angle $\theta$. One similarity transformation of a matrix
+$A$ is then calculated by multiplying with $S$ and its transpose,
+\begin{align*}
+    B = S^T A S.
+\end{align*}
+The elements of the matrix $B$ will after the multiplication be
+decided by the following algorithm.
+\begin{algorithmic}
+    \For{i=1,2,3,\dots,n}
+        \State$b_{ii} = a_{ii}$
 
-\begin{equation}
-    -\frac{\hbar^2}{2m}\left(
-    \frac{1}{r^2}\frac{d}{dr}r^2\frac{d}{dr} -
-    \frac{l(l+1)}{r^2} \right)R(r) + V(r)R(r) = ER(r)
-    \label{eq:schrod}
-\end{equation}
+        \State $b_{ik} = a_{ik}\cos{(\theta)} - a_{il}\sin{(\theta)}$
 
-Via introducing dimensionless variables for the radius $\rho$ this
-equation can be rewritten into equation
-\ref{eq:dimensionless_schrod}. Which in turn converts the problem
-of solving the radial Schrödinger equation into an eigenvalue
-problem where $\lambda$ are the eigenvalues we are interested in.
+        \State $b_{il} = a_{il}\cos{(\theta)} + a_{ik}\sin{(\theta)}$
 
-\begin{equation}
-    -\frac{d^2}{d\rho^2}u(\rho) + \rho^2u(\rho) = \lambda
-    u(\rho)
-    \label{eq:dimensionless_schrod}
-\end{equation}
+        \State $b_{kk} = a_{kk}\cos^2{(\theta)} -
+        2a_{kl}\cos{(\theta)}\sin{(\theta)} +
+        a_{ll}\sin^2{(\theta)}$
+
+        \State $b_{ll} = a_{ll}\cos^2{(\theta)} -
+        2a_{kl}\cos{(\theta)}\sin{(\theta)} +
+        a_{kk}\sin^2{(\theta)}$
+        
+        \State $b_{kl} =
+        (a_{kk}-a_{ll})\cos{(\theta)}\sin{(\theta)} +
+        a_{kl}(\cos^2{(\theta)} - \sin^2{(\theta)})$
+    \EndFor
+\end{algorithmic}
+To employ this to work in our favour --- to actually gradually
+reduce nondiagonal elements, the choice of $\theta$ must be a
+specific number. The number can be found by requiring that \[b_{kl}
+= b_{lk} = 0.\] This gives us the equation \[b_{kl} = (a_{kk} -
+a_{ll})\cos{(\theta)}\sin{(\theta)} + a_{kl}(\cos^2{(\theta)} -
+\sin^2{(\theta)}) = 0,\] which when introducing the variable \[\tau
+= \frac{a_{ll}-a_{kk}}{2a_{kl}},\] can be rewritten as \[t^2 +
+2\tau t - 1 = 0.\] where $t = \tan{(\theta)}$. This means that
+$t$ can be found by \[t = -\tau \pm \sqrt{1 + \tau^2} =
+\frac{1}{\tau \pm \sqrt{1 + \tau^2}}.\] The smallest of the two
+roots should be chosen from this expression.
+
+<+Explanation of how theta is kept below threshold and why.+>
+
+Furthermore, the values \[c = \cos{(\theta)} = \frac{1}{\sqrt{1 +
+t^2}}\] and $s = \sin{(\theta)} = tc$ can be calculated. 
+
+The coordinates $k$ and $l$ are decided by finding the maximum of
+all the nondiagonal elements of the matrix. This means setting the
+maximum elements ($b_{kl}$ and its symmetric counterpart $b_{lk}$)
+equal to zero which optimally reduces the sum of the nondiagonal
+elements.
+
+Repeated transformations are carried out until the absolute value
+of the largest nondiagonal matrix element is below a certain
+threshold. This makes sure that all other nondiagonal elements also
+are below this tolerance. \[\text{max}(|a_{ij}|) < \epsilon \text{,
+for all } i \neq j\] The tolerance would typically be of the
+magnitude \[\epsilon = 1 \cdot 10^{-8}\] or less.

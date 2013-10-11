@@ -20,8 +20,8 @@ multiplication the elements of $S$ will be changed according to
 this algorithm:
 \begin{algorithmic}
     \For{i = 1,2,3,\dots,n}
-        \State$r_{i,k} = cos(\theta) * r_{i,k} - sin(\theta) * r_{i,l}$
-		\State$r_{i,l} = cos(\theta) * r_{i,l} + sin(\theta) * r_{i,k}$
+        \State$r_{i,k} = cos(\theta)  r_{i,k} - sin(\theta)  r_{i,l}$
+		\State$r_{i,l} = cos(\theta)  r_{i,l} + sin(\theta)  r_{i,k}$
     \EndFor
 \end{algorithmic}
 The columns in the resulting matrix $S$ is then the eigenvectors

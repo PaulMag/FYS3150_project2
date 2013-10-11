@@ -3,25 +3,45 @@
 % Task d: Plot the wave function for two electrons as functions of the relative
 % coordinate r.
 
-We want to plot the wave functions, or more specifically, the probability functions for two electrons inside the harmonic oscillator. To do this one needs to find the eigenvectors that correspond to each eigenvalue of the system.
+We want to plot the wave functions, or more specifically, the
+probability functions for two electrons inside the harmonic
+oscillator. To do this one needs to find the eigenvectors that
+correspond to each eigenvalue of the system.
 
 The Jacobi Algorithm we used correspond to doing
-$$
-B = S^T_N \cdots S^T_3 \\ S^T_2 \\ S^T_1 \\ A \\ S_1 \\ S_2 \\ S_3 \cdots S_N
-  = S^T A S
-$$
-where $N$ is the number of iterations that was required to make all the non-diagonal elements of $B$ be $\approx 0$ and $S$ is the eigenvectors, or eigenfunctions, that correspond to the eigenvectors in $B$. To find just the $S$ we simply need to perform a part of the Jacobi rotation on the unit matrix $I_n$. After each multiplication the elements of $S$ will be changed according to this algorithm:
+$$ B = S^T_N \cdots S^T_3 \\ S^T_2 \\ S^T_1 \\ A \\ S_1 \\ S_2 \\
+S_3 \cdots S_N = S^T A S, $$
+where $N$ is the number of iterations that was required to make all
+the non-diagonal elements of $B$ be $\approx 0$ and $S$ is the
+eigenvectors, or eigenfunctions, that correspond to the
+eigenvectors in $B$. To find just the $S$ we simply need to perform
+a part of the Jacobi rotation on the unit matrix $I_n$. After each
+multiplication the elements of $S$ will be changed according to
+this algorithm:
 \begin{algorithmic}
     \For{i = 1,2,3,\dots,n}
-        \State$r_{i,k} = cos(\theta) * r_{i,k} - sin(\theta) * r_{i,l}$
-		\State$r_{i,l} = cos(\theta) * r_{i,l} + sin(\theta) * r_{i,k}$
+        \State$r_{i,k} = cos(\theta)  r_{i,k} - sin(\theta)  r_{i,l}$
+		\State$r_{i,l} = cos(\theta)  r_{i,l} + sin(\theta)  r_{i,k}$
     \EndFor
 \end{algorithmic}
-The columns in the resulting matrix $S$ is then the eigenvectors that correspond to the eigenvalues in the diagonal of $B$, so we will receive $n$ eigenvectors of length $n$. We are only interested in finding the wave functions for the ground state and the two lowest excited states: $\lambda_0$, $\lambda_1$ and $\lambda_2$. To find the eigenvectors that correspond to these eigenvalues we need to find which columns in $B$ that contains these eigenvalues and pick out the columns in $S$ with the same position.
+The columns in the resulting matrix $S$ is then the eigenvectors
+that correspond to the eigenvalues in the diagonal of $B$, so we
+will receive $n$ eigenvectors of length $n$. We are only interested
+in finding the wave functions for the ground state and the two
+lowest excited states: $\lambda_0$, $\lambda_1$ and $\lambda_2$. To
+find the eigenvectors that correspond to these eigenvalues we need
+to find which columns in $B$ that contains these eigenvalues and
+pick out the columns in $S$ with the same position.
 
-We will visualize these eigenvectors by plotting the actual probability distributions. A Python script is used to read and visualize these vectors. If we call the vectors $\mathbf{v}_i$ the actual wave functions are $\psi_i(\rho) = \frac{\mathbf{v}_i}{\rho}$ and the probability distributions is $P(\rho) = \psi_i(\rho)^2 = ( \frac{\mathbf{v}_i}{\rho} )^2$
+We will visualize these eigenvectors by plotting the actual
+probability distributions. A Python script is used to read and
+visualize these vectors. If we call the vectors $\mathbf{v}_i$ the
+actual wave functions are $\psi_i(\rho) =
+\frac{\mathbf{v}_i}{\rho}$ and the probability distributions is
+$P(\rho) = \psi_i(\rho)^2 = ( \frac{\mathbf{v}_i}{\rho} )^2$
 
-Lastly the vectors are normalized so that the total probability will appear as one for each energy state.
+Lastly the vectors are normalized so that the total probability
+will appear as one for each energy state.
 $$
 \mathrm{normalized}(\mathbf{v}_i)
 = \frac{\mathbf{v}_i}{\mathrm{d}\rho \cdot \sum \mathbf{v}_i }

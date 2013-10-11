@@ -1,0 +1,6 @@
+Implementing the Jacobi rotation algorithm have given us great insight in how some
+eigenvalue solvers work. The Jacobi method is easy to implement and understand. The
+drawback is that it repeatedly needs to transform elements that were previously set to
+zero. Therefore it grows slow for large matrices. For future projects, built-in functions
+such as Armadillo's $\verb|eig_sym()|$ are much easier and faster to use, at no expense of
+the precision.

@@ -38,6 +38,22 @@
 % Fancy ruler needed for titlepage
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
+\newcommand{\bilde}[3]{
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=\textwidth]{#1}
+		\caption{#3 \label{#2}}
+	\end{figure}
+}
+\newcommand{\bildeto}[4]{
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=0.96\textwidth]{#1}
+		\includegraphics[width=0.96\textwidth]{#2}
+		\caption{#4 \label{#3}}
+	\end{figure}
+}
+
 \author{Kristoffer Brækken, Vedad Hodzic, Paul Magnus
 Sørensen-Clark}
 
@@ -57,15 +73,17 @@ Sørensen-Clark}
 \section{Algorithm}
 \input{algorithm.tex}
 
-\section{Results}
-\input{exB.tex}
-
-\input{resultsEigenvalues.tex}
-
-
 \section{Plot the wave function for two electrons in oscillator}
 \input{d.tex}
 
+\section{Results}
+\input{exB.tex}
+\input{d_results.tex} % paulms' results
+
+\input{resultsEigenvalues.tex}
+
+\section{B (placeholder, remove it if you want to, see if I care)}
+\input{exB.tex}
 
 \section{Discussion}
 % Remove line below to get rid of placeholder text

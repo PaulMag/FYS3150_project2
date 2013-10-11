@@ -46,9 +46,24 @@ a_{ll})\cos{(\theta)}\sin{(\theta)} + a_{kl}(\cos^2{(\theta)} -
 2\tau t - 1 = 0.\] where $t = \tan{(\theta)}$. This means that
 $t$ can be found by \[t = -\tau \pm \sqrt{1 + \tau^2} =
 \frac{1}{\tau \pm \sqrt{1 + \tau^2}}.\] The smallest of the two
-roots should be chosen from this expression.
+roots should be chosen from this expression since this ensures that
+$|\theta| < \pi / 4$, which in turn ensures that the
+difference between the matrix $A$ and the rotated matrix $B$ is as
+minimized. This means that $\tan{(\theta)} < \pi / 4$.
 
-<+Explanation of how theta is kept below threshold and why.+>
+There are three cases of $\tau$.
+\begin{itemize}
+    \item $\tau > 0$: Choosing the sign in the denominator as $\tau
+        + \sqrt{1 + \tau^2}$ will ensure $t < 1$.
+    \item $\tau < 0$: Choosing the sign in the denominator as
+        $-\tau + \sqrt{1 + \tau^2}$ will ensure the same as the above
+        case, $|t| < 1$.
+    \item $\tau = 0$: For this particular case $\tau + \sqrt{1 +
+        \tau^2} = 1$ which means that $t = 1 \Rightarrow
+        |\tan{(\theta)}| = 1 \Rightarrow |\theta| = \pi/4$.
+\end{itemize}
+Choosing the roots as shown in these points will always ensure that
+$|\theta| < \pi / 4$.
 
 Furthermore, the values \[c = \cos{(\theta)} = \frac{1}{\sqrt{1 +
 t^2}}\] and $s = \sin{(\theta)} = tc$ can be calculated. 
